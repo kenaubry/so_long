@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenaubry <kenaubry@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmechety <rmechety@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 20:31:56 by kenaubry          #+#    #+#             */
-/*   Updated: 2022/07/24 20:31:59 by kenaubry         ###   ########.fr       */
+/*   Updated: 2022/08/01 00:37:36 by rmechety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ t_image	*init_imgs(void)
 
 	img = (t_image *)malloc(sizeof(t_image));
 	if (img == NULL)
-		exit(1);
+		exit(1); // leaks si on sort de la fonction car tu as allouer new dans init_mlx
+
+	// fais un memset sur ton image pour initialiser toutes les valeurs a 0
 	img->addr = NULL;
 	img->img = NULL;
 	img->pos_x = 0;
@@ -33,6 +35,7 @@ t_data	*init_mlx(void)
 	new = (t_data *)malloc(sizeof(t_data));
 	if (!new)
 		exit(1);
+	// fais un memset(new, 0, sizeof(t_data)); au lieu de tout mettre a NULL ou 0;
 	new->mlx = NULL;
 	new->win = NULL;
 	new->read = 1;
@@ -41,13 +44,13 @@ t_data	*init_mlx(void)
 	new->exit = 0;
 	new->mvmnt = 0;
 	new->direction = 0;
-	new->dark = init_imgs();
-	new->player2 = init_imgs();
-	new->walls = init_imgs();
-	new->collectibles = init_imgs();
-	new->exit = init_imgs();
-	new->player = init_imgs();
-	new->background = init_imgs();
+	new->dark = init_imgs(); // leaks si echoues
+	new->player2 = init_imgs(); // leaks si echoues
+	new->walls = init_imgs(); // leaks si echoues
+	new->collectibles = init_imgs(); // leaks si echoues
+	new->exit = init_imgs(); // leaks si echoues
+	new->player = init_imgs(); // leaks si echoues
+	new->background = init_imgs(); // leaks si echoues
 	return (new);
 }
 
@@ -67,11 +70,11 @@ static void	*free_map(char **map)
 
 static void	*free_img(t_data *mlx, t_image *img)
 {
-	if (img->img && img->addr)
+	if (img->img && img->addr) // segfault si img == NULL
 		mlx_destroy_image(mlx->mlx, img->img);
 	img->img = NULL;
 	img->addr = NULL;
-	if (img)
+	if (img) // si img == NULL tu as deja segfault des la premiere ligne
 		free(img);
 }
 

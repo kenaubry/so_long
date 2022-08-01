@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenaubry <kenaubry@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmechety <rmechety@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 19:43:28 by kenaubry          #+#    #+#             */
-/*   Updated: 2022/07/15 19:43:30 by kenaubry         ###   ########.fr       */
+/*   Updated: 2022/08/01 00:06:08 by rmechety         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # include <string.h>
 
+// tres bien penser ces defines
 # define MISSING_MAP "Error. Map is missing.\n"
 # define TOO_MUCH_ARGS "Error. Too much arguments.\n"
 # define OPEN_FAIL "Error\nOpen failed"
@@ -64,6 +65,11 @@ typedef struct	s_data
 {
 	void    *mlx;
     void    *win;
+	// ce genre de struct passe mais un tableau de struct est mieux pour stocker les images et les textures
+	// t_image	*textures[10];
+	// avec enum obj { player, player2, walls, collectibles, etc... }
+	// tu mets les index a NULL au depart
+	// je vais te faire un exemple de code dans un fichers opti_struct.c
 	t_image	*player;
 	t_image	*player2;//pas encore fini
 	t_image	*walls;
