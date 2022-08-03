@@ -25,12 +25,34 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int len_map(t_data *mlx)
+int	len_map(t_data *mlx)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (mlx->map[i] != NULL)
-        i++;
-    return (i);
+	i = 0;
+	while (mlx->map[i] != NULL)
+		i++;
+	return (i);
+}
+
+int	nb_collectibles(t_data *mlx)
+{
+	int	i;
+	int	j;
+	int	collectibles;
+
+	i = 0;
+	collectibles = 0;
+	while (mlx->map[i] != NULL)
+	{
+		j = 0;
+		while (mlx->map[i][j] != '\0')
+		{
+			if (mlx->map[i][j] == 'C')
+				collectibles += 1;
+			j++;
+		}
+		i++;
+	}
+	return (collectibles);
 }

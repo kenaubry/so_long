@@ -34,33 +34,32 @@ or moved.
 
 */
 
-static void    *ft_realloc_str(char *ptr, size_t size)
+static void	*ft_realloc_str(char *ptr, size_t size)
 {
-    char    *new;
-    int      i;
+	char	*new;
+	int		i;
 
-    i = 0;
-    if (ptr == NULL)
-    {
-        new = malloc(size);
-        if (!new)
-            exit(1);
-        return (new);
-    }
-    else if (size == 0 && ptr != NULL)
-    {
-        free(ptr);
-        return (NULL);
-    }
-    while (ptr[i])
-    {
-        new[i] = ptr[i];
-        i++;
-    }
-    free(ptr);
-    return (new);
+	i = 0;
+	if (ptr == NULL)
+	{
+		new = malloc(size);
+		if (!new)
+			exit(1);
+		return (new);
+	}
+	else if (size == 0 && ptr != NULL)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	while (ptr[i])
+	{
+		new[i] = ptr[i];
+		i++;
+	}
+	free(ptr);
+	return (new);
 }
-
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -68,12 +67,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 
 	i = 0;
-    //printf("len 1 = %ld, len 2 = %ld\n", ft_strlen(s1), ft_strlen(s2));
-    //printf("str p = %p\n", &str);
-    //str = NULL;
-    //str = ft_realloc_str(str, ft_strlen(s1) + ft_strlen(s2) + 1);
 	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2) + 1)));
-	if (str == 0)
+	if (str == NULL)
 		return (NULL);
 	if (s1)
 		while (*s1)

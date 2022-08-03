@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   event.c                                            :+:      :+:    :+:   */
+/*   error_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenaubry <kenaubry@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/24 20:31:39 by kenaubry          #+#    #+#             */
-/*   Updated: 2022/07/24 20:31:42 by kenaubry         ###   ########.fr       */
+/*   Created: 2022/08/03 11:51:52 by kenaubry          #+#    #+#             */
+/*   Updated: 2022/08/03 11:51:55 by kenaubry         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	valid_keycode(int keycode)
+void	open_error(t_data *mlx)
 {
-	if (keycode == UP || keycode == W || keycode == DOWN \
-		|| keycode == S || keycode == LEFT || keycode == A \
-		|| keycode == RIGHT || keycode == D)
-		return (1);
-	return (0);
+	free_mlx(mlx);
+	ft_putendl_fd(OPEN_FAIL, STDERR_FILENO);
+	exit(1);
 }
 
-int	key_press(int keycode, t_data *mlx)
+void	map_name_error(t_data *mlx)
 {
-	if (keycode == 65307 || keycode == 17)
-		exit_esc(mlx);
-	if (valid_keycode(keycode))
-		move_player(mlx, keycode);
-	return (0);
+	free_mlx(mlx);
+	ft_putendl_fd(MAP_NAME_ERROR, STDERR_FILENO);
+	exit(1);
+}
+
+void	read_error(t_data *mlx)
+{
+	close(mlx->fd);
+	free_mlx(mlx);
+	ft_putendl_fd(READ_FAIL, STDERR_FILENO);
+	exit(1);
+}
+
+void	too_arg_error(t_data *mlx)
+{
+	free_mlx(mlx);
+	ft_putendl_fd(TOO_MUCH_ARGS, STDERR_FILENO);
+	exit(1);
 }

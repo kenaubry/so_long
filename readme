@@ -1,0 +1,46 @@
+03/08
+
+- remettre flag dans makefile et regler : ('textures_path' defined but not unused)
+
+- essayer d'opti la fonction is_dark(launch_game.c:22)
+                             check_map_walls(check_map:54)
+
+- il me reste du coup encore à modifier le réaffichage de la map pour éviter les flashs
+
+- pour récuperer la map et la mettre dans un double tableau
+j'utilise pour l'instant toujours split et strjoin (sans leaks quand le programme n'a pas d'erreur, leaks en cas d'erreur dans une des deux fonctions) parce que j'ai galéré à utiliser gnl, y'avait des leaks partout faut que je me repenche dessus
+
+- potentiellement organiser le projet en faisant des .h séparés pour les struct, les define et les proto
+    - est-ce que je devrais organiser les srcs en sous-dossier de sorte à ce que ça ressemble à :
+
+        srcs/
+            error/
+                check_map.c
+                error_args.c
+                ...
+            game/
+                init_game.c
+                launch_game.c
+            ...
+
+    si oui, comment j'organise où vont les .o ?
+
+    
+
+NORME :
+
+- je n'arrive pas à régler cette erreur dans mon .h : 
+    
+    Error: MISALIGNED_VAR_DECL  (line: 182, col:  25):	Misaligned variable declaration
+
+    entre "const" et "g_manage_error", avec un espace
+    ou un tab je garde cette erreur
+
+- à faire dans la journée où demain :
+
+    - check_map.c :
+        Error: TOO_MANY_LINES       (line:  69, col:   1):	Function has more than 25 lines
+    - launch_game :
+        Error: TOO_MANY_LINES       (line:  50, col:   1):	Function has more than 25 lines
+        Error: TOO_MANY_LINES       (line:  95, col:   1):	Function has more than 25 lines
+

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenaubry <kenaubry@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenaubry <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/24 20:32:06 by kenaubry          #+#    #+#             */
-/*   Updated: 2022/07/24 20:32:08 by kenaubry         ###   ########.fr       */
+/*   Created: 2021/11/27 18:17:50 by kenaubry          #+#    #+#             */
+/*   Updated: 2021/11/27 18:17:51 by kenaubry         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	main(int ac, char **av)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	t_data	*mlx;
+	unsigned char	*s_cpy;
 
-	mlx = init_mlx(mlx);
-	parsing(ac, av, mlx);
-	init_game(mlx);
-	launch_game(mlx);
-	return (0);
+	s_cpy = s;
+	while (n--)
+		*s_cpy++ = c;
+	return (s);
 }

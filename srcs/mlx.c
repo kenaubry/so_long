@@ -12,46 +12,36 @@
 
 #include "../includes/so_long.h"
 
-t_image	*init_imgs(void)
+t_image	*init_imgs(t_data *mlx)
 {
 	t_image	*img;
 
 	img = (t_image *)malloc(sizeof(t_image));
 	if (img == NULL)
+	{
+		free_mlx(mlx);
 		exit(1);
-	img->addr = NULL;
-	img->img = NULL;
-	img->pos_x = 0;
-	img->pos_y = 0;
+	}
+	ft_memset(img, 0, sizeof(t_image));
 	return (img);
 }
 
-t_data	*init_mlx(void)
+t_data	*init_mlx(t_data *mlx)
 {
 	t_data	*new;
+	int		i;
 
+	i = 0;
 	new = (t_data *)malloc(sizeof(t_data));
 	if (!new)
 		exit(1);
-	new->mlx = NULL;
-	new->win = NULL;
-	new->read = 1;
-	new->map = NULL;
-	new->mvmnt = 0;
-	new->exit = 0;
-	new->mvmnt = 0;
-	new->direction = 0;
-	new->dark = init_imgs();
-	new->player2 = init_imgs();
-	new->walls = init_imgs();
-	new->collectibles = init_imgs();
-	new->exit = init_imgs();
-	new->player = init_imgs();
-	new->background = init_imgs();
+	ft_memset(new, 0, sizeof(t_data));
+	while (i < TEXT_NBR)
+		new->textures[i++] = init_imgs(new);
 	return (new);
 }
 
-static void	*free_map(char **map)
+void	*free_map(char **map)
 {
 	int	i;
 
@@ -67,30 +57,25 @@ static void	*free_map(char **map)
 
 static void	*free_img(t_data *mlx, t_image *img)
 {
-	if (img->img && img->addr)
-		mlx_destroy_image(mlx->mlx, img->img);
-	img->img = NULL;
-	img->addr = NULL;
 	if (img)
+	{
+		if (img->img && img->addr)
+			mlx_destroy_image(mlx->mlx, img->img);
 		free(img);
+	}
 }
 
 void	free_mlx(t_data *mlx)
 {
-	if (mlx->player != NULL)
-		free_img(mlx, mlx->player);
-	if (mlx->player2 != NULL)
-		free_img(mlx, mlx->player2);
-	if (mlx->dark != NULL)
-		free_img(mlx, mlx->dark);
-	if (mlx->walls != NULL)
-		free_img(mlx, mlx->walls);
-	if (mlx->collectibles != NULL)
-		free_img(mlx, mlx->collectibles);
-	if (mlx->exit != NULL)
-		free_img(mlx, mlx->exit);
-	if (mlx->background != NULL)
-		free_img(mlx, mlx->background);
+	int	i;
+
+	i = 0;
+	while (i < TEXT_NBR)
+	{
+		if (mlx->textures[i] != NULL)
+			free_img(mlx, mlx->textures[i]);
+		i++;
+	}
 	if (mlx->win != NULL)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 	if (mlx->mlx)
